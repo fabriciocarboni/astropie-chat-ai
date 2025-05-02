@@ -10,105 +10,78 @@ import { siteLang, themeColor } from "~/data/config";
 
 <!doctype html>
 <html lang={siteLang}>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content={themeColor} />
-        <meta name="description" content={description} />
-        <meta name="robots" content="index,follow" />
-        <meta name="googlebot" content="index,follow" />
-        <link rel="author" href="humans.txt" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={themeColor} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <meta name="googlebot" content="index,follow" />
+    <link rel="author" href="humans.txt" />
 
-        <!-- Your existing meta tags -->
-        <meta name="msapplication-TileColor" content="#ffffff" />
+    <!-- Your existing meta tags -->
+    <meta name="msapplication-TileColor" content="#ffffff" />
 
-        <meta property="og:url" content={Astro.url} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={title} />
-        <meta property="og:image" content={`${baseUrl}/images/og-image.jpg`} />
-        <meta property="og:description" content={description} />
-        <meta property="og:site_name" content="WP Infusion" />
-        <meta property="og:locale" content={siteLang} />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:image" content={`${baseUrl}/images/og-image.jpg`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="WP Infusion" />
+    <meta property="og:locale" content={siteLang} />
 
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content={Astro.url} />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content={Astro.url} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
 
-        <title>{pageTitle}</title>
-        <ClientRouter />
+    <title>{pageTitle}</title>
+    <ClientRouter />
 
-        <!-- Botpress Webchat Styles -->
-        <style is:global>
-            #webchat-container {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                z-index: 1000;
-            }
-        </style>
-    </head>
-    <body>
-        <Header />
-        <main>
-            <slot />
-        </main>
-        <Footer />
+    <!-- Botpress Webchat Styles -->
+    <style is:global>
+      #webchat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
 
-        <!-- Botpress Webchat Container -->
-        <div id="webchat-container"></div>
+    <!-- Botpress Webchat Container -->
+    <div id="webchat-container"></div>
 
-        <!-- Botpress Webchat Scripts -->
-        <script>
-            function loadBotpressScript() {
-                return new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    script.src = "https://cdn.botpress.cloud/webchat/v2.2/inject.js";
-                    script.onload = resolve;
-                    script.onerror = reject;
-                    document.body.appendChild(script);
-                });
-            }
-
-            function initBotpress() {
-                if (window.botpress) {
-                    window.botpress.init({
-                        "botId": "949c9509-2903-4e37-9f95-26ec8873daba",
-                        "configuration": {
-                            "botName": "Tigor",
-                            "botAvatar": "https://files.bpcontent.cloud/2025/03/02/21/20250302213900-FM5KRP1X.svg",
-                            "botDescription": "Sou seu assitente para o resto",
-                            "website": {},
-                            "email": {
-                                "title": "resto@resto.com",
-                                "link": "resto@resto.com"
-                            },
-                            "phone": {},
-                            "termsOfService": {},
-                            "privacyPolicy": {},
-                            "color": "#25D366",
-                            "variant": "solid",
-                            "themeMode": "light",
-                            "fontFamily": "inter",
-                            "radius": 4,
-                            "additionalStylesheetUrl": "https://files.bpcontent.cloud/2025/03/02/21/20250302214239-XZS549TS.css",
-                            "allowFileUpload": false
-                        },
-                        "clientId": "d6cbe940-452f-4097-b180-9ef469bdf37a"
-                    });
-                } else {
-                    console.error("Botpress script not loaded properly");
-                }
-            }
-
-            loadBotpressScript()
-                .then(() => {
-                    // Wait a bit to ensure Botpress is fully initialized
-                    setTimeout(initBotpress, 1000);
-                })
-                .catch(error => {
-                    console.error("Failed to load Botpress script:", error);
-                });
-        </script>
-    </body>
+    <!-- Widget Configuration -->
+    <script is:inline>
+      window.ChatWidgetConfig = {
+        webhook: {
+          url: "https://api.n8n.buzzlabs.pt/webhook/7bebb24b-2de9-4f49-9cdb-5245f6c2bb3e/chat",
+          route: "general",
+        },
+        branding: {
+          logo: "tigor-1-resized.png",
+          name: "tigor.ai",
+          welcomeText: "Olá 👋, como posso te ajudar?",
+          responseTimeText:
+            "Este é um teste para mycryptofunding.org. Me pergunte o que quiser sobre o mundo crypto!",
+        },
+        style: {
+          primaryColor: "#25ce65",
+          secondaryColor: "#003333",
+          position: "right",
+          backgroundColor: "#ffffff",
+          fontColor: "#333333",
+        },
+      };
+    </script>
+    <script is:inline src="/chat-widget.js"></script>
+    <!-- Widget Script -->
+  </body>
 </html>

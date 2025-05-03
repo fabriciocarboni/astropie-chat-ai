@@ -271,7 +271,64 @@
         .n8n-chat-widget .chat-footer a:hover {
             opacity: 1;
         }
-    `;
+    /* Responsividade para dispositivos móveis */
+    @media (max-width: 768px) {
+        .n8n-chat-widget .chat-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .n8n-chat-widget .chat-container.position-left {
+            left: 0;
+        }
+
+        .n8n-chat-widget .chat-toggle.active {
+            display: none;
+        }
+
+        .n8n-chat-widget .brand-header {
+            border-radius: 0;
+        }
+
+        .n8n-chat-widget .close-button {
+            font-size: 24px;
+        }
+    }
+
+    /* Estilo personalizado para o texto "Tigor.ai" no rodapé */
+    .n8n-chat-widget .chat-footer a {
+        color: #333333; /* Cor do texto */
+        text-decoration: none;
+        font-size: 13px;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+        font-family: inherit;
+        font-weight: bold; /* Adiciona negrito */
+        /* Se quiser mudar a fonte, descomente a linha abaixo */
+        /* font-family: 'Arial', sans-serif; */
+    }
+
+    .n8n-chat-widget .chat-footer a:hover {
+        opacity: 1;
+    }
+
+    .n8n-chat-widget .chat-footer a::before {
+        content: "✨ ";
+        display: inline-block;
+        margin-right: 2px;
+    }
+
+    `
+    ;
 
     // Load Geist font
     const fontLink = document.createElement('link');
@@ -296,7 +353,7 @@
             welcomeText: '',
             responseTimeText: '',
             poweredBy: {
-                text: 'Tigor.ai',
+                text: 'Powered by TigorAI',
                 link: 'https://www.tigor.ai'
             }
         },
@@ -491,6 +548,7 @@
 
     toggleButton.addEventListener('click', () => {
         chatContainer.classList.toggle('open');
+        toggleButton.classList.toggle('active');
     });
 
     // Add close button handlers
@@ -498,6 +556,7 @@
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             chatContainer.classList.remove('open');
+            toggleButton.classList.remove('active');
         });
     });
 })();
